@@ -12,7 +12,6 @@ while True:
 
             rate(1000)
             frame=controller.frame()
-            interaction_box = frame.interaction_box
             for hand in frame.hands:
 
                 iter_cy=iter(hand_Demo.objects)

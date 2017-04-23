@@ -17,7 +17,7 @@ while True:
 
                 for finger in hand.fingers:  #append joints
                     for i in range(4):joints.append(finger.bone(i).prev_joint)
-                    joints.append(finger.bone(3).next_joint)
+                    joints.append(finger.bone(i).next_joint)
 
                 iter_j=iter(map(interaction_box.normalize_point, joints))   #raw_to_cooked
 

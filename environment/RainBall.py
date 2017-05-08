@@ -1,6 +1,6 @@
 import Leap
 from visual import *
-from random import random
+from my_color import randcolor
 
 controller=Leap.Controller()
 
@@ -9,8 +9,8 @@ hand_Demo=frame()
 for _ in range(20):cylinder(frame=hand_Demo, color=(0.5,0.4,0.5))    #20 bones ,thumb has a non-length bone
 
 rasengans = frame()
+rc=randcolor()
 charging=False
-R,G,B=135,206,250
 
 scene.center.y+=200
 while True:
@@ -21,7 +21,7 @@ while True:
             for hand in frame.hands:
                 #product rasengan
                 if hand.grab_strength==1 and not(charging) :
-                    rasengan= sphere(color=(random(), random(), random()))#(R/255.0,G/255.0,B/255.0))
+                    rasengan= sphere(color=next(rc))
                     charging = True
                 if charging:
                     rasengan.pos=hand.sphere_center.to_tuple()
@@ -41,6 +41,9 @@ while True:
                         cy.radius=bone.width/2
             #rasengans moving
             for i in rasengans.objects:
+                if i.v.magnitude>1000:#exceed 1000 mm/s => rainball
+                    i.color=next(rc)
+
                 i.pos+=vector((i.v*0.01).to_tuple())
                 if i.pos.mag>1500:#1500 mm around
                     i.visible=False

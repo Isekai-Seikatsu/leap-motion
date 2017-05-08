@@ -9,7 +9,6 @@ hand_Demo=frame()
 for _ in range(20):cylinder(frame=hand_Demo, color=(0.5,0.4,0.5))    #20 bones ,thumb has a non-length bone
 
 rasengans = frame()
-rc=rasengan_color()
 charging=False
 
 scene.center.y+=180
@@ -21,7 +20,7 @@ while True:
             for hand in frame.hands:
                 #product rasengan
                 if hand.grab_strength==1 and not(charging) :
-                    rasengan= sphere(frame=rasengans, v=Leap.Vector.zero)
+                    rasengan= sphere(frame=rasengans, v=Leap.Vector.zero, rc=rasengan_color())
                     charging = True
                 if charging:
                     rasengan.pos=hand.sphere_center.to_tuple()
@@ -40,7 +39,7 @@ while True:
                         cy.radius=bone.width/2
             #rasengans moving and color changing
             for i in rasengans.objects:
-                i.color=next(rc)
+                i.color=next(i.rc)
                 i.pos+=vector((i.v*0.01).to_tuple())
                 if i.pos.mag>1500:#1500 mm around
                     i.visible=False

@@ -32,14 +32,13 @@ def make_maze(w=5, h=5):
         result[-(i+5)]=result[-(i+5)][:-1]+'0'
     return result
 
-def create(graph):
-    X,Y,Z=0,0,0
-    maze=frame()
+def create(graph,X=0,Y=0,Z=0):
+    maze, X0=frame(), X
     for line in graph:
         for i in line:
             if i=='1' : box(frame=maze,pos=(X,Y,Z),length=length,height=height,width=width,material=materials.wood)
             X+=length
-        X=0
+        X=X0
         Y-=height
     return maze
 
@@ -47,7 +46,7 @@ def delete(frame):
     for i in frame.objects:
         i.visible=False
         del i
-
+'''
 while __name__=='__main__':
     rate(100)
 
@@ -58,5 +57,4 @@ while __name__=='__main__':
     print'Done'
         #t=clock()
         #gc.collect()
-        #print clock()-t
-
+        #print clock()-t'''

@@ -6,14 +6,12 @@ controller=Leap.Controller()
 scene = display(title='leap motion',width=800,height=600,background=(0.5,0.6,0.5))
 ball=sphere(color=(0.5,0.4,0.5))
 w,h=5,5#
-maze=create(make_maze( w, h))
 D3=( length*(w*4.0+1), height*(h*4.0+1), width )
-
-maze.pos=( (-D3[0]+length)/2.0, (D3[1]-height)/2.0)
+maze=create(make_maze( w, h), (-D3[0]+length)/2.0, (D3[1]-height)/2.0 )
 
 while True:
     #try:
-            rate(1000)
+            rate(100)
         #if controller.is_connected:
             frame=controller.frame()
             interaction_box = frame.interaction_box

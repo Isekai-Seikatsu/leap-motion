@@ -7,11 +7,15 @@ while True:
     if len(frame.hands)==2:
         order={}
         for hand in frame.hands:
-            #print hand.confidenc
-            pwm = Leap.Vector.forward.dot(hand.palm_normal)/Leap.Vector.forward.magnitude_squared
-            if hand.is_right:   order['R'] = pwm
-            else:   order['L'] = pwm
+            pwm = 0 if hand.grab_strength == 1 else Leap.Vector.backward.dot(hand.palm_normal)/Leap.Vector.backward.magnitude_squared
+
+            if hand.is_right:
+                order['R'] = pwm
+            else:
+                order['L'] = pwm
+        print order
+        #requests order
 
     else:
-        #stop
+        #requests stop
         pass

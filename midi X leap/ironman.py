@@ -4,15 +4,13 @@ controller=Leap.Controller()
 
 while True:
     frame=controller.frame()
-    if len(frame.hands)==1:
-        #order=[]
+    if len(frame.hands)==2:
+        order={}
         for hand in frame.hands:
-            #print hand.confidence
+            #print hand.confidenc
             pwm = Leap.Vector.forward.dot(hand.palm_normal)/Leap.Vector.forward.magnitude_squared
-            if pwm > 0:
-                print 'forward'
-            else:
-                print 'backward'
+            if hand.is_right:   order['R'] = pwm
+            else:   order['L'] = pwm
 
     else:
         #stop

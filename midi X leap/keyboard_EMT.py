@@ -13,7 +13,7 @@ def octave(L=1.,pitch=3):
     j = 0
     unit.sorted_ob = sorted(unit.objects, key = lambda key:key.x)
     for i in unit.sorted_ob:
-        i.note = (pitch-3) + 60 + j
+        i.note = pitch*12 + 24 + j
         i.backup = (False, i.color)
         #i.play
         j += 1
@@ -31,4 +31,6 @@ def keyboard(finger_width = 25., pitch_range = (1, 6)):
     return keyboard, (1.0618*finger_width*7, 6.472*finger_width, finger_width)
 
 if __name__=='__main__':
-    keyboard()
+    keyboard, _ = keyboard()
+    for i in keyboard.keys:
+        print i.note

@@ -12,6 +12,11 @@ sthop = 100#set the height of piano
 keyboard.y += sthop
 scene.center.y += sthop
 
+import pygame.midi
+pygame.midi.init()
+player = pygame.midi.Output(0)
+player.set_instrument(0)
+
 while True:
             rate(100)
             frame = controller.frame()
@@ -32,3 +37,9 @@ while True:
 
             for k in range(60):
                 keyboard.keys[k].color = (0.8, 0.988, 0.992) if keys_is_pressed[k] else keyboard.keys[k].backup[1]
+                if keyboard.keys[k].backup[0] == True and keys_is_pressed[k] == False:
+                    player.note_off(keyboard.keys[k].note, 127)#
+                    keyboard.keys[k].backup[0] == False
+                elif  keyboard.keys[k].backup[0] == False and keys_is_pressed[k] == True:
+                    player.note_on(keyboard.keys[k].note, 127)#
+                    keyboard.keys[k].backup[0] == True

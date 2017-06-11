@@ -7,8 +7,8 @@ scene = display(title='leap motion',width=800,height=600,background=(0.5,0.6,0.5
 
 hands = [hand_demo(), hand_demo()]
 
-keyboard, octave_LHW = keyboard()
-sthop = 100#set the height of piano
+keyboard, octave_LHW = keyboard(30)
+sthop = 180#set the height of piano
 keyboard.y += sthop
 scene.center.y += sthop
 
@@ -27,6 +27,7 @@ while True:
                     if  all([ 1  if l < p < u else 0 for l, p, u in zip((-2*octave_LHW[0], -octave_LHW[2]*0.927+sthop, -octave_LHW[1]/2.), finger.tip_position, (3*octave_LHW[0], octave_LHW[2]*0.691+sthop, octave_LHW[1]/2.))]):
                         x = finger.tip_position.x#hand.palm_position.x
                         _, key = min(((abs(key.pos.x - x), key) for key in keyboard.objects[int((x+octave_LHW[0]*2)/octave_LHW[0])].objects))
+                        key.velocity = finger.tip_velocity
                         keys_is_pressed[key.note-36] = True
 
 
@@ -38,8 +39,8 @@ while True:
             for k in range(60):
                 keyboard.keys[k].color = (0.8, 0.988, 0.992) if keys_is_pressed[k] else keyboard.keys[k].backup[1]
                 if keyboard.keys[k].backup[0] == True and keys_is_pressed[k] == False:
-                    player.note_off(keyboard.keys[k].note, 127)#
+                    player.note_off(keyboard.keys[k].note, int(keyboard.keys[k].velocity.magnitude/1000*127))
                     keyboard.keys[k].backup[0] == False
                 elif  keyboard.keys[k].backup[0] == False and keys_is_pressed[k] == True:
-                    player.note_on(keyboard.keys[k].note, 127)#
+                    player.note_on(keyboard.keys[k].note, int(keyboard.keys[k].velocity.magnitude/1000*127))
                     keyboard.keys[k].backup[0] == True
